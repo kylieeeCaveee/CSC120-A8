@@ -1,20 +1,45 @@
-import java.util.ArrayList; 
+import java.util.ArrayList;
 /* This is a stub for the House class */
 public class House extends Building implements HouseRequirements {
   private ArrayList<Student> residents; 
   private boolean hasDiningRoom; 
+  private boolean hasElevator; 
 
   /**
-   * This is the constructor for the house class.
+   * This is the constructor for the house class that allows you to set everything.
    * @param name the name of the house
    * @param address the address of the house
    * @param nFloors the number of floors the house has
    * @param diningRoom T/F the house has a dining room
    */
-  public House(String name, String address, int nFloors, boolean diningRoom) {
+  public House(String name, String address, int nFloors, boolean diningRoom, boolean elevator) {
     super(name, address, nFloors ); 
     this.residents= new ArrayList<Student>(); 
     this.hasDiningRoom= diningRoom; 
+    this.hasElevator= elevator; 
+    System.out.println("You have built a house: 🏠");
+  }
+  /**
+   * This is the constructor for the house class that will use deafult values for everything. It will have zero floors, no dining room, and no elevator.
+   */
+  public House(){
+    super("Unkown House Name", "Unkown Address", 1); 
+    this.residents=new ArrayList<Student>(); 
+    this.hasDiningRoom= false; 
+    this.hasElevator= false; 
+    System.out.println("You have built a house: 🏠");
+  }
+
+  /**
+   * This is the constructor that allows you to set everything in the house that affects functionality (the # of floors, wether it has a dining room or not, wether it has a elevator or not)
+   * @param nFloors - the number of floors the house has
+   * @param diningRoom -T/F the house has a dining room
+   * @param elevator - T/F the hosue has an elevator
+   */
+  public House(int nFloors, boolean diningRoom, boolean elevator){
+    super("Unkown House Name", "Unkown Address", nFloors); 
+    this.hasDiningRoom= diningRoom; 
+    this.hasElevator= elevator; 
     System.out.println("You have built a house: 🏠");
   }
   /**
@@ -65,8 +90,31 @@ public class House extends Building implements HouseRequirements {
     return residents.contains(s); 
   }
 
+  /**
+   * This method shows all the options that are avalible for a house through the building parent class and through the house sub-class.
+   */
+  public void showOptions(){
+    super.showOptions();
+    if(hasElevator){
+      System.out.println(" + goToFloor(n)");
+    }
+    System.out.println("House Specfic Options Include:"+ "\n + hasDiningRoom() \n + nResidents() \n + moveIn(Student s) \n + moveOut(Student s) \n + isResident(Student s)");
+  }
+
+  /** 
+   * This method overrides the building go to floor method and allows you to move up non-consecutive floors only if the house has an elevator.
+   * @param floorNum - the floor to be moved to
+   */
+  public void goToFloor(int floorNum){
+    if(hasElevator){
+      super.goToFloor(floorNum);
+    }else{
+      System.out.println(this.name+ " does not have an elevator please use the goUp() method instead.");
+    }
+  }
+
   public static void main(String[] args) {
-    House wilson= new House("Wilson", "made up street", 4, false);
+    House wilson= new House("Wilson", "made up street", 4, false, false);
     Student kylie= new Student("Kylie", "1", 2028); 
     Student alice= new Student("Alice", "12345", 2027); 
     wilson.moveIn(kylie); 
@@ -85,8 +133,12 @@ public class House extends Building implements HouseRequirements {
     }catch(RuntimeException e){
       System.out.println(e.getLocalizedMessage()); 
     }
-
-
+    wilson.showOptions();
+    House comstock= new House("comstock", "made up street", 4, false, true);
+    comstock.showOptions();
+    wilson.goToFloor(3);
+    comstock.enter(); 
+    comstock.goToFloor(3);
   }
 
 }

@@ -8,13 +8,33 @@ public class Library extends Building implements LibraryRequirements {
      * This is the constructor for a Library
      * @param name the name of the library
      * @param address the address of the library
-     * @param nfloors the number of floors the library has
+     * @param nFloors the number of floors the library has
      */
-    public Library(String name, String address, int nfloors) {
-      super(name, address, nfloors); 
+    public Library(String name, String address, int nFloors) {
+      super(name, address, nFloors); 
       this.collection= new Hashtable<String,Boolean>(); 
       System.out.println("You have built a library: 📖");
     }
+
+    /**
+     * This is the constructor for a library with all default values
+     */
+    public Library(){
+      super("Unkown Library Name", "Unkown Library Address", 1); 
+      this.collection= new Hashtable<String, Boolean>(); 
+      System.out.println("You have built a library: 📖");
+    }
+
+    /**
+     * This is the constructor for a library with all default values, except the values that impact function use like nFloors.
+     * @param nFloors the number of floors the library will have when created.
+     */
+    public Library(int nFloors){
+      super("Unkown Library Name", "Unkown Library Address", nFloors); 
+      this.collection=new Hashtable<String,Boolean>(); 
+      System.out.println("You have built a library: 📖");
+    }
+    
     /**
      * This adds a book to the libraries collection
      * @param title this is the title of the book to be added
@@ -80,6 +100,15 @@ public class Library extends Building implements LibraryRequirements {
         throw new RuntimeException("This book is not currently checked out.");
       }
     }
+
+    /** 
+     * This method shows the options of activities to do in the library avalible through the builiding parent class and avalible through the library subclass.
+     */
+    public void showOptions(){
+      super.showOptions();
+      System.out.println(" + goToFLoor(n)");
+      System.out.println("Library Specfic Options Include:"+ "\n + addTitle(String title) \n + removeTitle(String title) \n + checkOut(String title) \n + returnBook( String title) \n + containsTitle(String title) \n + isAvalible(String title) \n + printCollection()");
+    }
   
     public static void main(String[] args) {
       Library testLib= new Library("lib", "idk address", 4);
@@ -91,7 +120,11 @@ public class Library extends Building implements LibraryRequirements {
       }catch(RuntimeException e){
         System.out.println(e.getLocalizedMessage());
       }
+      testLib.showOptions();
+      testLib.enter(); 
+      testLib.goToFloor(3); 
     }
+
   }
       
   
