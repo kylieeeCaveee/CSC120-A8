@@ -110,8 +110,7 @@ public class Cafe extends Building implements CafeRequirements{
     }
     
     public void goToFloor(int floorNum){
-        System.out.println("You are not allowed past the first floor on Cafes."); 
-        
+        throw new RuntimeException("You are not allowed past the first floor on Cafes.");   
     }
     
     public static void main(String[] args) {
@@ -119,7 +118,11 @@ public class Cafe extends Building implements CafeRequirements{
         testCafe.sellCoffee(800, 100,100); 
         testCafe.sellCoffee(8, 2,2); 
         testCafe.showOptions();
-        testCafe.goToFloor(3); 
+        try{
+            testCafe.goToFloor(3);  
+        }catch (RuntimeException e){
+            System.out.println(e.getLocalizedMessage());
+        }
         testCafe.sellCoffee(800,100,100,10); 
     }
     

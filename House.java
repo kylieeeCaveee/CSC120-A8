@@ -109,7 +109,7 @@ public class House extends Building implements HouseRequirements {
     if(hasElevator){
       super.goToFloor(floorNum);
     }else{
-      System.out.println(this.name+ " does not have an elevator please use the goUp() method instead.");
+      throw new RuntimeException(this.name+ " does not have an elevator please use the goUp() method instead."); 
     }
   }
 
@@ -136,7 +136,11 @@ public class House extends Building implements HouseRequirements {
     wilson.showOptions();
     House comstock= new House("comstock", "made up street", 4, false, true);
     comstock.showOptions();
-    wilson.goToFloor(3);
+    try{
+      wilson.goToFloor(3);
+    } catch (RuntimeException e){
+      System.out.println(e.getLocalizedMessage());
+    }
     comstock.enter(); 
     comstock.goToFloor(3);
   }
