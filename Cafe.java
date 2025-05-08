@@ -104,11 +104,16 @@ public class Cafe extends Building implements CafeRequirements{
         this.nCups+=nCups; 
     }
 
+    /**
+     * This method prints out all of the options that users can perform at the cafe
+     */
     public void showOptions(){
         System.out.println("Available options at " + this.name + ":\n + enter() \n + exit()  \n + showOptions()");
         System.out.println("Cafe Specific Options Include"+ "\n + sellCoffee(int n, int n, int n)");
     }
-    
+    /**
+     * This method let's players know they aren't welcome past the first floor on cafes.
+     */
     public void goToFloor(int floorNum){
         throw new RuntimeException("You are not allowed past the first floor on Cafes.");   
     }
